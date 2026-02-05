@@ -459,7 +459,7 @@
                 const svgContent = NodeSeekVPS.generateSVG(svgData);
                 // 保存SVG内容供稍后上传
                 NodeSeekVPS.currentSVGContent = svgContent;
-                
+
                 // 移除自动上传逻辑
                 // if (localStorage.getItem('nodeseek_login_token')) {
                 //    NodeSeekVPS.uploadResult = await NodeSeekVPS.uploadSVG(svgContent);
@@ -475,7 +475,6 @@
 
                 // 设置分享数据
                 document.getElementById('vps-is-calculated').value = '1';
-                NodeSeekVPS.updateShareButtonsState();
 
             } catch (error) {
                 NodeSeekVPS.utils.toggleLoading(false);
@@ -866,9 +865,9 @@
             if (premiumLabel && premiumText) {
                 markdownText += `\n- ${premiumLabel} ${premiumText}`;
             }
-            
+
             // 复制文本不包含图片链接
-            
+
             markdownText += `\n\n*导出时间: ${(new Date().toLocaleString('zh-CN'))}*\n`;
             await NodeSeekVPS.utils.copyToClipboard(markdownText);
             return true;
@@ -879,7 +878,7 @@
             if (isCalculated !== '1') {
                 return false;
             }
-            
+
             // 检查登录状态
             const token = localStorage.getItem('nodeseek_login_token');
             if (!token) {
@@ -1058,7 +1057,7 @@
             const bodyY = outer.y + headerH + bodyGap;
             const panelW = Math.floor((outer.w - gap) / 2);
             // 修正：同步减小面板高度，避免超出 SVG 底部
-            const panelH = bodyH - 50; 
+            const panelH = bodyH - 50;
             const left = { x: outer.x, y: bodyY, w: panelW, h: panelH };
             const right = { x: outer.x + panelW + gap, y: bodyY, w: panelW, h: panelH };
 
@@ -1178,11 +1177,11 @@
             svg += `<text class="font label" x="${card2.x + card2.w / 2}" y="${card2.y + 40}" text-anchor="middle">分享功能</text>`;
 
             const btnY2 = card2.y + 80;
-            const totalBtnW = shareButtons.reduce((sum, b) => sum + (b.w + 20), 0) + (shareButtons.length - 1) * 10; 
+            const totalBtnW = shareButtons.reduce((sum, b) => sum + (b.w + 20), 0) + (shareButtons.length - 1) * 10;
             // Note: I need to update shareButtons widths in the definition if I want them wider, 
             // but here I just added +20 to each for calculation, which is wrong if I don't update the object.
             // Let's rely on updated shareButtons definition which I should do.
-            
+
             // Re-calculating center based on new widths (I will update shareButtons array in next tool call or this one if possible, but search/replace is tricky for that).
             // Let's assume I update shareButtons widths: 84->100, 104->120, 96->110.
             const updatedShareButtons = [
@@ -1192,7 +1191,7 @@
             ];
             const realTotalBtnW = updatedShareButtons.reduce((sum, b) => sum + b.w, 0) + (updatedShareButtons.length - 1) * 10;
             let bx = card2.x + (card2.w - realTotalBtnW) / 2;
-            
+
             for (let i = 0; i < updatedShareButtons.length; i++) {
                 const b = updatedShareButtons[i];
                 svg += `<rect class="btn" x="${bx}" y="${btnY2}" width="${b.w}" height="36" rx="8" ry="8"/>`;
@@ -1212,14 +1211,14 @@
             const token = localStorage.getItem('nodeseek_login_token');
             if (!token) return null;
 
-            const serverUrl = 'https://hb.396663.xyz'; 
-            
+            const serverUrl = 'https://hb.396663.xyz';
+
             try {
                 // 显示上传中...
                 if (!silent) {
                     NodeSeekVPS.utils.showToast('正在上传计算结果...', 'tips');
                 }
-                
+
                 const response = await fetch(`${serverUrl}/api/vps/upload_svg`, {
                     method: 'POST',
                     headers: {
@@ -1267,11 +1266,11 @@
                     } catch (e) {
                         // Ignore json parse error
                     }
-                    
+
                     if (response.status === 413) {
-                         NodeSeekVPS.utils.showToast('上传失败: 存储空间不足', 'error');
+                        NodeSeekVPS.utils.showToast('上传失败: 存储空间不足', 'error');
                     } else {
-                         NodeSeekVPS.utils.showToast('上传失败: ' + errorMessage, 'error');
+                        NodeSeekVPS.utils.showToast('上传失败: ' + errorMessage, 'error');
                     }
                 }
             } catch (error) {
@@ -1362,7 +1361,6 @@
             const copyBtn = document.getElementById('vps-copy-btn');
             if (copyBtn) {
                 copyBtn.addEventListener('click', NodeSeekVPS.copyShareLink);
-                copyBtn.addEventListener('mouseenter', NodeSeekVPS.updateShareButtonsState);
             }
 
             // Markdown复制按钮
@@ -1379,17 +1377,11 @@
                         copied.style.opacity = '1';
                     }
                 });
-                markdownBtn.addEventListener('mouseenter', NodeSeekVPS.updateShareButtonsState);
             }
 
             // 复制 MD 按钮 (新)
             const copyMdBtn = document.getElementById('vps-copy-md-btn');
             if (copyMdBtn) {
-                // 初始化检查
-                NodeSeekVPS.updateShareButtonsState();
-
-                // 鼠标移入时再次检查（处理多标签页登录状态变化）
-                copyMdBtn.addEventListener('mouseenter', NodeSeekVPS.updateShareButtonsState);
 
                 copyMdBtn.addEventListener('click', async () => {
                     // 如果被禁用则不执行
@@ -2381,7 +2373,7 @@
 
                             <!-- 分享功能 -->
                             <div id="vps-share" style="background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid #eef2f7;">
-                                 <h4 style="margin: 0 0 15px 0; text-align: center;">分享功能<span id="vps-svg-login-hint" style="font-size: 12px; font-weight: normal; color: #666; margin-left: 5px;">（SVG需要登录使用）</span></h4>
+                                 <h4 style="margin: 0 0 15px 0; text-align: center;">分享功能</h4>
                                 <input id="vps-is-calculated" type="hidden" value="">
 
                                 <div class="button-container" style="display: flex; gap: 8px; justify-content: center;">
@@ -2597,8 +2589,6 @@
             NodeSeekVPS.initDatePickers();
             NodeSeekVPS.fetchExchangeRates();
             NodeSeekVPS.bindEventListeners();
-
-            NodeSeekVPS.bindAuthHintLiveUpdates(dialog);
 
             // 使弹窗可拖动
             if (window.UI && typeof window.UI.makeDraggable === 'function') {

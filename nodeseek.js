@@ -3046,39 +3046,35 @@
         };
         dialog.appendChild(hotTopicsBtn); // 添加到日志弹窗中
 
-        // 新增：配置同步按钮
-        const configSyncBtn = document.createElement('button');
-        configSyncBtn.textContent = '配置同步';
-        configSyncBtn.style.marginBottom = '10px';
-        configSyncBtn.style.marginLeft = '10px'; // 与热点统计按钮的间距
-        configSyncBtn.style.padding = '3px 8px';
-        configSyncBtn.style.background = '#FF6B35'; // 橙色背景
-        configSyncBtn.style.color = 'white';
-        configSyncBtn.style.border = 'none';
-        configSyncBtn.style.borderRadius = '3px';
-        configSyncBtn.style.cursor = 'pointer';
-        configSyncBtn.onclick = function () {
-            if (window.NodeSeekLogin && typeof window.NodeSeekLogin.showDialog === 'function') {
+        // WebDAV 同步按钮
+        const webdavSyncBtn = document.createElement('button');
+        webdavSyncBtn.textContent = 'WebDAV 同步';
+        webdavSyncBtn.style.marginBottom = '10px';
+        webdavSyncBtn.style.marginLeft = '10px'; // 与热点统计按钮的间距
+        webdavSyncBtn.style.padding = '3px 8px';
+        webdavSyncBtn.style.background = '#FF6B35'; // 橙色背景
+        webdavSyncBtn.style.color = 'white';
+        webdavSyncBtn.style.border = 'none';
+        webdavSyncBtn.style.borderRadius = '3px';
+        webdavSyncBtn.style.cursor = 'pointer';
+        webdavSyncBtn.onclick = function () {
+            if (window.NodeSeekWebDAV && typeof window.NodeSeekWebDAV.showDialog === 'function') {
                 try {
-                    window.NodeSeekLogin.showDialog();
+                    window.NodeSeekWebDAV.showDialog();
                 } catch (error) {
-                    addLog('配置同步功能调用失败: ' + error.message);
+                    addLog('WebDAV 同步功能调用失败: ' + error.message);
                 }
             } else {
-                if (!window.NodeSeekLogin) {
-                    addLog('配置同步模块未加载。');
-                } else {
-                    addLog('配置同步功能不可用。');
-                }
+                addLog('WebDAV 模块未加载，请确保已引入 webdav.js');
             }
         };
-        dialog.appendChild(configSyncBtn); // 添加到日志弹窗中
+        dialog.appendChild(webdavSyncBtn); // 添加到日志弹窗中
 
         // 新增：VPS计算器按钮
         const vpsCalculatorBtn = document.createElement('button');
         vpsCalculatorBtn.textContent = 'VPS计算器';
         vpsCalculatorBtn.style.marginBottom = '10px';
-        vpsCalculatorBtn.style.marginLeft = '10px'; // 与配置同步按钮的间距
+        vpsCalculatorBtn.style.marginLeft = '10px'; // 与 WebDAV 同步按钮的间距
         vpsCalculatorBtn.style.padding = '3px 8px';
         vpsCalculatorBtn.style.background = '#9C27B0'; // 紫色背景
         vpsCalculatorBtn.style.color = 'white';
