@@ -473,8 +473,12 @@
                     resultElement.scrollIntoView({ behavior: 'smooth' });
                 }
 
+
                 // 设置分享数据
                 document.getElementById('vps-is-calculated').value = '1';
+
+                // 更新分享按钮状态
+                NodeSeekVPS.utils.updateShareButtonsState();
 
             } catch (error) {
                 NodeSeekVPS.utils.toggleLoading(false);

@@ -1048,10 +1048,11 @@
                 <legend style="font-weight: bold;">屏蔽设置</legend>
                 
                 <div style="margin-bottom: 10px;">
-                    <label style="display: block; margin-bottom: 5px;">UID 黑名单</label>
-                    <textarea id="uid-list" placeholder="每行一个 UID&#10;12345&#10;67890" 
+                    <label style="display: block; margin-bottom: 5px;">UID 黑名单 <small style="color: #666;">(支持 "UID 用户名" 格式)</small></label>
+                    <textarea id="uid-list" placeholder="每行一个 UID 或 UID+用户名&#10;12345&#10;67890 张三&#10;11111 李四" 
                         style="width: 100%; min-height: 60px; padding: 5px; box-sizing: border-box; font-family: monospace;"
                     >${config.block.uids.join('\n')}</textarea>
+                    <small style="color: #888; display: block; margin-top: 3px;">💡 提示：可以只填UID，也可以填"UID 用户名"方便识别</small>
                 </div>
 
                 <div style="margin-bottom: 10px;">
