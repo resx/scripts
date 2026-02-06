@@ -876,32 +876,18 @@
         copyImageMarkdown: async () => {
             const isCalculated = document.getElementById('vps-is-calculated').value;
             if (isCalculated !== '1') {
+                NodeSeekVPS.utils.showToast('请先计算结果', 'error');
                 return false;
             }
 
-            // 检查登录状态
-            const token = localStorage.getItem('nodeseek_login_token');
-            if (!token) {
-                NodeSeekVPS.utils.showToast('需要登录才能使用', 'error');
+            // 直接复制 SVG 内容，无需登录
+            if (!NodeSeekVPS.currentSVGContent) {
+                NodeSeekVPS.utils.showToast('未找到可分享的 SVG 内容', 'error');
                 return false;
             }
 
-            // 如果尚未上传，则执行上传
-            if (!NodeSeekVPS.uploadResult) {
-                if (NodeSeekVPS.currentSVGContent) {
-                    // 使用静默上传
-                    NodeSeekVPS.uploadResult = await NodeSeekVPS.uploadSVG(NodeSeekVPS.currentSVGContent, true);
-                }
-            }
-
-            if (!NodeSeekVPS.uploadResult || !NodeSeekVPS.uploadResult.url) {
-                NodeSeekVPS.utils.showToast('上传失败或未找到可分享的图片链接', 'error');
-                return false;
-            }
-
-            const url = NodeSeekVPS.uploadResult.url;
-            const md = `![VPS计算结果](${url})`;
-            await NodeSeekVPS.utils.copyToClipboard(md);
+            await NodeSeekVPS.utils.copyToClipboard(NodeSeekVPS.currentSVGContent);
+            NodeSeekVPS.utils.showToast('SVG 代码已复制到剪贴板', 'success');
             return true;
         },
 
@@ -969,7 +955,6 @@
 
         updateShareButtonsState: () => {
             const isCalculated = document.getElementById('vps-is-calculated')?.value;
-            const token = localStorage.getItem('nodeseek_login_token');
 
             const copyBtn = document.getElementById('vps-copy-btn');
             if (copyBtn) {
@@ -991,7 +976,7 @@
 
             const copyMdBtn = document.getElementById('vps-copy-md-btn');
             if (copyMdBtn) {
-                const enabled = isCalculated === '1' && !!token;
+                const enabled = isCalculated === '1';
                 copyMdBtn.disabled = !enabled;
                 copyMdBtn.style.opacity = enabled ? '1' : '0.5';
                 copyMdBtn.style.cursor = enabled ? 'pointer' : 'not-allowed';
