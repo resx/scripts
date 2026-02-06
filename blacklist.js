@@ -605,6 +605,25 @@
         closeBtn.onclick = function () { dialog.remove(); };
         dialog.appendChild(closeBtn);
 
+        // ==== 新增：增强配置按钮 ====
+        const enhancedConfigBtn = document.createElement('button');
+        enhancedConfigBtn.innerHTML = '⚙️ 增强';
+        enhancedConfigBtn.style.position = 'absolute';
+        enhancedConfigBtn.style.right = '50px';
+        enhancedConfigBtn.style.top = '8px';
+        enhancedConfigBtn.style.background = '#4CAF50';
+        enhancedConfigBtn.style.color = 'white';
+        enhancedConfigBtn.style.border = 'none';
+        enhancedConfigBtn.style.padding = '6px 12px';
+        enhancedConfigBtn.style.borderRadius = '4px';
+        enhancedConfigBtn.style.cursor = 'pointer';
+        enhancedConfigBtn.style.fontSize = '14px';
+        enhancedConfigBtn.style.fontWeight = 'bold';
+        enhancedConfigBtn.onclick = function () {
+            showEnhancedConfigDialog();
+        };
+        dialog.appendChild(enhancedConfigBtn);
+
         // 搜索框容器与输入
         const searchWrap = document.createElement('div');
         searchWrap.style.margin = '8px 0 10px 0';
