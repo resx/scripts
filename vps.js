@@ -478,7 +478,7 @@
                 document.getElementById('vps-is-calculated').value = '1';
 
                 // 更新分享按钮状态
-                NodeSeekVPS.utils.updateShareButtonsState();
+                NodeSeekVPS.updateShareButtonsState();
 
             } catch (error) {
                 NodeSeekVPS.utils.toggleLoading(false);
